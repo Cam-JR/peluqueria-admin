@@ -1,0 +1,37 @@
+
+frontend/
+│── node_modules/
+│── public/
+│── src/
+│   │── components/
+│   │   ├── Navbar.jsx
+│   │   ├── Sidebar.jsx
+│   │   └── Table.jsx  (reutilizable)
+│   │── pages/
+│   │   ├── Dashboard.jsx
+│   │   ├── Servicios.jsx
+│   │   ├── Peluqueros.jsx
+│   │   └── Citas.jsx
+│   │── App.jsx
+│   │── main.jsx
+│   │── styles/
+│   │   └── App.css  (aquí pondremos todos los estilos)
+│── package.json
+
+ 
+ frontend/
+│── public/
+│── src/
+│   │── components/
+│   │   ├── Navbar.jsx
+│   │   ├── Sidebar.jsx
+│   │   └── Table.jsx
+│   │── pages/
+│   │   ├── Dashboard.jsx
+│   │   ├── Servicios.jsx
+│   │   ├── Peluqueros.jsx
+│   │   └── Citas.jsx
+│   │── styles/
+│   │   └── App.css
+│   │── App.jsx
+│   │── main.jsx

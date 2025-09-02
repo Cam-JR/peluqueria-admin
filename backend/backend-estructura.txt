@@ -1,0 +1,17 @@
+backend/
+│── node_modules/
+│── src/
+│   │── config/
+│   │   └── db.js          # conexión MySQL
+│   │── controllers/
+│   │   ├── serviciosController.js
+│   │   ├── peluquerosController.js
+│   │   └── citasController.js
+│   │── routes/
+│   │   ├── serviciosRoutes.js
+│   │   ├── peluquerosRoutes.js
+│   │   └── citasRoutes.js
+│   │── models/            # opcional, si quieres organizar consultas SQL
+│   │── app.js             # configuración express
+│── .env                   # variables de entorno (DB, puerto, etc.)
+│── package.json
