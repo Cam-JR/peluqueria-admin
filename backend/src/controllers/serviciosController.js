@@ -15,7 +15,7 @@ export const createServicio = async (req, res) => {
     );
 
     res.status(201).json({
-      id: result.insertId,
+      servicio_id: result.insertId,
       nombre,
       precio,
       duracion
@@ -42,7 +42,7 @@ export const getServicioById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const [rows] = await db.query("SELECT * FROM servicios WHERE id = ?", [id]);
+    const [rows] = await db.query("SELECT * FROM servicios WHERE servicio_id = ?", [id]);
 
     if (rows.length === 0) {
       return res.status(404).json({ message: "Servicio no encontrado" });
@@ -62,7 +62,7 @@ export const updateServicio = async (req, res) => {
     const { nombre, precio, duracion } = req.body;
 
     const [result] = await db.query(
-      "UPDATE servicios SET nombre = ?, precio = ?, duracion = ? WHERE id = ?",
+      "UPDATE servicios SET nombre = ?, precio = ?, duracion = ? WHERE servicio_id = ?",
       [nombre, precio, duracion, id]
     );
 
@@ -76,13 +76,21 @@ export const updateServicio = async (req, res) => {
     res.status(500).json({ message: "Error al actualizar el servicio" });
   }
 };
+ 
 
-// 📌 Eliminar un servicio
+
+// 📌 Eliminar un servicio 
 export const deleteServicio = async (req, res) => {
   try {
+    console.log("Body recibido:", req.body);
+    console.log("Params recibidos:", req.params);
+
     const { id } = req.params;
 
-    const [result] = await db.query("DELETE FROM servicios WHERE id = ?", [id]);
+    const [result] = await db.query(
+      "DELETE FROM servicios WHERE servicio_id = ?",
+      [id]
+    );
 
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: "Servicio no encontrado" });

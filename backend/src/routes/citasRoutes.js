@@ -9,6 +9,7 @@ import {
 
 const router = express.Router();
 
+// citas
 router.get("/", getCitas);
 router.get("/:id", getCitaById);
 router.post("/", createCita);

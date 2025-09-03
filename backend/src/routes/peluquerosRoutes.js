@@ -4,7 +4,7 @@ import {
   getPeluqueroById,
   createPeluquero,
   updatePeluquero,
-  deletePeluquero
+  deletePeluquero,
 } from "../controllers/peluquerosController.js";
 
 const router = express.Router();

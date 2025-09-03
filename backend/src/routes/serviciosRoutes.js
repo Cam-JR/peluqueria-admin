@@ -1,4 +1,4 @@
-import express from "express";
+import { Router } from "express";
 import {
   getServicios,
   getServicioById,
@@ -7,8 +7,8 @@ import {
   deleteServicio
 } from "../controllers/serviciosController.js";
 
-const router = express.Router();
-
+const router = Router();
+// servicios
 router.get("/", getServicios);
 router.get("/:id", getServicioById);
 router.post("/", createServicio);

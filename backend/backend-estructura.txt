@@ -7,10 +7,12 @@ backend/
 │   │   ├── serviciosController.js
 │   │   ├── peluquerosController.js
 │   │   └── citasController.js
+│   │   └── especialidadesController.js
 │   │── routes/
 │   │   ├── serviciosRoutes.js
 │   │   ├── peluquerosRoutes.js
 │   │   └── citasRoutes.js
+│   │   └── especialidadesRoutes.js
 │   │── models/            # opcional, si quieres organizar consultas SQL
 │   │── app.js             # configuración express
 │── .env                   # variables de entorno (DB, puerto, etc.)
