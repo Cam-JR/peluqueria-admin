@@ -16,18 +16,22 @@ function Peluqueros() {
   // ==============================
   // Fetch data
   // ==============================
-  const fetchPeluqueros = () => {
-    axios
-      .get("http://localhost:5000/api/peluqueros")
-      .then((res) => setPeluqueros(res.data))
-      .catch((err) => console.error(err));
+  const fetchPeluqueros = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/peluqueros");
+      setPeluqueros(res.data);
+    } catch (err) {
+      console.error("❌ Error al obtener peluqueros:", err);
+    }
   };
 
-  const fetchEspecialidades = () => {
-    axios
-      .get("http://localhost:5000/api/especialidades")
-      .then((res) => setEspecialidades(res.data))
-      .catch((err) => console.error(err));
+  const fetchEspecialidades = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/especialidades");
+      setEspecialidades(res.data);
+    } catch (err) {
+      console.error("❌ Error al obtener especialidades:", err);
+    }
   };
 
   useEffect(() => {
@@ -42,44 +46,60 @@ function Peluqueros() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const resetForm = () => {
+    setForm({ nombre: "", apellido: "", telefono: "", especialidad_id: "" });
+    setEditingId(null);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (editingId) {
-      axios
-        .put(`http://localhost:5000/api/peluqueros/${editingId}`, form)
-        .then(() => {
-          fetchPeluqueros();
-          setForm({ nombre: "", apellido: "", telefono: "", especialidad_id: "" });
-          setEditingId(null);
-        })
-        .catch((err) => console.error(err));
-    } else {
-      axios
-        .post("http://localhost:5000/api/peluqueros", form)
-        .then(() => {
-          fetchPeluqueros();
-          setForm({ nombre: "", apellido: "", telefono: "", especialidad_id: "" });
-        })
-        .catch((err) => console.error(err));
+    // Normalizar payload
+    const payload = {
+      ...form,
+      especialidad_id:
+        form.especialidad_id === "" ? null : Number(form.especialidad_id),
+    };
+
+    try {
+      if (editingId) {
+        await axios.put(
+          `http://localhost:5000/api/peluqueros/${editingId}`,
+          payload
+        );
+        alert("✅ Peluquero actualizado");
+      } else {
+        await axios.post("http://localhost:5000/api/peluqueros", payload);
+        alert("✅ Peluquero agregado");
+      }
+      fetchPeluqueros();
+      resetForm();
+    } catch (err) {
+      console.error("❌ Error al guardar:", err);
+      alert("❌ Error al guardar. Revisa la consola.");
     }
   };
 
   const handleEdit = (peluquero) => {
     setForm({
-      nombre: peluquero.nombre,
-      apellido: peluquero.apellido,
-      telefono: peluquero.telefono,
-      especialidad_id: "", // no cargamos múltiples especialidades por ahora
+      nombre: peluquero.nombre || "",
+      apellido: peluquero.apellido || "",
+      telefono: peluquero.telefono || "",
+      especialidad_id: peluquero.especialidad_id ?? "",
     });
     setEditingId(peluquero.peluquero_id);
   };
 
-  const handleDelete = (id) => {
-    axios
-      .delete(`http://localhost:5000/api/peluqueros/${id}`)
-      .then(() => fetchPeluqueros())
-      .catch((err) => console.error(err));
+  const handleDelete = async (id) => {
+    if (!window.confirm("¿Estás segura de eliminar este peluquero?")) return;
+    try {
+      await axios.delete(`http://localhost:5000/api/peluqueros/${id}`);
+      fetchPeluqueros();
+      alert("🗑️ Peluquero eliminado");
+    } catch (err) {
+      console.error("❌ Error al eliminar:", err);
+      alert("❌ Error al eliminar. Revisa la consola.");
+    }
   };
 
   // ==============================
@@ -90,7 +110,7 @@ function Peluqueros() {
     { header: "Nombre", accessor: "nombre" },
     { header: "Apellido", accessor: "apellido" },
     { header: "Teléfono", accessor: "telefono" },
-    { header: "Especialidades", accessor: "especialidad" },
+    { header: "Especialidad", accessor: "especialidad_nombre" },
     { header: "Acciones", accessor: "acciones" },
   ];
 
@@ -148,6 +168,11 @@ function Peluqueros() {
         <button type="submit">
           {editingId ? "Actualizar" : "Agregar"}
         </button>
+        {editingId && (
+          <button type="button" onClick={resetForm}>
+            Cancelar
+          </button>
+        )}
       </form>
 
       <Table columns={columns} data={dataWithActions} />

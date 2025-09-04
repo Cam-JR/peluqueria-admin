@@ -26,6 +26,11 @@ function Especialidades() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const resetForm = () => {
+    setForm({ nombre: "",  especialidad_id: "" });
+    setEditingId(null);
+  };
+
   // Crear o actualizar especialidad
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -95,6 +100,11 @@ function Especialidades() {
         >
           {editingId ? "Actualizar" : "Agregar"}
         </button>
+        {editingId && (
+          <button type="button" onClick={resetForm}>
+            Cancelar
+          </button>
+        )}
       </form>
 
       <Table columns={columns} data={dataWithActions} />
