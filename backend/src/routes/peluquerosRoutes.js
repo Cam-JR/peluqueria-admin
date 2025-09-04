@@ -1,7 +1,7 @@
 // src/routes/peluquerosRoutes.js
 import { Router } from "express";
 import {
-  getPeluqueros,
+  getPeluqueros, 
   createPeluquero,
   updatePeluquero,
   deletePeluquero
@@ -9,7 +9,7 @@ import {
 
 const router = Router();
 
-router.get("/", getPeluqueros);
+router.get("/", getPeluqueros); 
 router.post("/", createPeluquero);
 router.put("/:id", updatePeluquero);   // ✅ Update
 router.delete("/:id", deletePeluquero); // ✅ Delete

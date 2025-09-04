@@ -19,6 +19,7 @@ export const getPeluqueros = async (req, res) => {
   }
 };
 
+
 // Crear peluquero
 export const createPeluquero = async (req, res) => {
   try {
