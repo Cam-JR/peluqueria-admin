@@ -1,18 +1,17 @@
-import express from "express";
+// src/routes/peluquerosRoutes.js
+import { Router } from "express";
 import {
   getPeluqueros,
-  getPeluqueroById,
   createPeluquero,
   updatePeluquero,
-  deletePeluquero,
+  deletePeluquero
 } from "../controllers/peluquerosController.js";
 
-const router = express.Router();
+const router = Router();
 
 router.get("/", getPeluqueros);
-router.get("/:id", getPeluqueroById);
 router.post("/", createPeluquero);
-router.put("/:id", updatePeluquero);
-router.delete("/:id", deletePeluquero);
+router.put("/:id", updatePeluquero);   // ✅ Update
+router.delete("/:id", deletePeluquero); // ✅ Delete
 
 export default router;

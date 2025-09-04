@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
 import serviciosRoutes from "./routes/serviciosRoutes.js";
-import peluquerosRoutes from "./routes/peluquerosRoutes.js";
 import citasRoutes from "./routes/citasRoutes.js";
+import peluquerosRoutes from "./routes/peluquerosRoutes.js";
 import especialidadesRoutes from "./routes/especialidadesRoutes.js";
 
 const app = express();
