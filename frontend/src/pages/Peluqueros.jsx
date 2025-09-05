@@ -6,8 +6,7 @@ function Peluqueros() {
   const [peluqueros, setPeluqueros] = useState([]);
   const [especialidades, setEspecialidades] = useState([]);
   const [form, setForm] = useState({
-    nombre: "",
-    apellido: "",
+    nombre_completo: "",
     telefono: "",
     especialidad_id: "",
   });
@@ -47,14 +46,13 @@ function Peluqueros() {
   };
 
   const resetForm = () => {
-    setForm({ nombre: "", apellido: "", telefono: "", especialidad_id: "" });
+    setForm({ nombre_completo: "", telefono: "", especialidad_id: "" });
     setEditingId(null);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Normalizar payload
     const payload = {
       ...form,
       especialidad_id:
@@ -82,8 +80,7 @@ function Peluqueros() {
 
   const handleEdit = (peluquero) => {
     setForm({
-      nombre: peluquero.nombre || "",
-      apellido: peluquero.apellido || "",
+      nombre_completo: peluquero.nombre_completo || "",
       telefono: peluquero.telefono || "",
       especialidad_id: peluquero.especialidad_id ?? "",
     });
@@ -107,8 +104,7 @@ function Peluqueros() {
   // ==============================
   const columns = [
     { header: "ID", accessor: "peluquero_id" },
-    { header: "Nombre", accessor: "nombre" },
-    { header: "Apellido", accessor: "apellido" },
+    { header: "Nombre Completo", accessor: "nombre_completo" },
     { header: "Teléfono", accessor: "telefono" },
     { header: "Especialidad", accessor: "especialidad_nombre" },
     { header: "Acciones", accessor: "acciones" },
@@ -133,17 +129,10 @@ function Peluqueros() {
 
       <form onSubmit={handleSubmit} className="form">
         <input
-          name="nombre"
-          value={form.nombre}
+          name="nombre_completo"
+          value={form.nombre_completo}
           onChange={handleChange}
-          placeholder="Nombre"
-          required
-        />
-        <input
-          name="apellido"
-          value={form.apellido}
-          onChange={handleChange}
-          placeholder="Apellido"
+          placeholder="Nombre completo"
           required
         />
         <input
