@@ -2,8 +2,10 @@ import express from "express";
 import cors from "cors";
 import serviciosRoutes from "./routes/serviciosRoutes.js";
 import citasRoutes from "./routes/citasRoutes.js";
+import clientesRoutes from "./routes/clientesRoutes.js";
 import peluquerosRoutes from "./routes/peluquerosRoutes.js";
-import especialidadesRoutes from "./routes/especialidadesRoutes.js";
+import especialidadesRoutes from "./routes/especialidadesRoutes.js"; 
+
 
 const app = express();
 
@@ -15,6 +17,7 @@ app.use(express.json());
 // Rutas
 app.use("/api/servicios", serviciosRoutes);
 app.use("/api/peluqueros", peluquerosRoutes);
+app.use("/api/clientes", clientesRoutes); // ✅
 app.use("/api/citas", citasRoutes);
 app.use("/api/especialidades", especialidadesRoutes);
 
