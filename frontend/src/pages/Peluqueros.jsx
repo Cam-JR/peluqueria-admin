@@ -158,7 +158,7 @@ function Peluqueros() {
           onChange={handleChange}
           required
         >
-          <option value="">Seleccione especialidad</option>
+          <option value="">-- Seleccione especialidad --</option>
           {especialidades.map((e) => (
             <option key={e.especialidad_id} value={e.especialidad_id}>
               {e.nombre}
