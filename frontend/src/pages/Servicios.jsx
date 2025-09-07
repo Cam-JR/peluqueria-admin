@@ -46,10 +46,23 @@ function Servicios() {
     setEditingId(servicio.servicio_id); // ✅ usar servicio_id
   };
 
-  const handleDelete = (id) => {
-    axios.delete(`http://localhost:5000/api/servicios/${id}`)
-      .then(() => fetchServicios());
+const handleDeleteServicio = (id) => {
+  if (!window.confirm("¿Estás segura de eliminar este servicio?")) return;
+
+  axios
+    .delete(`http://localhost:5000/api/servicios/${id}`)
+    .then(() => {
+      fetchServicios(); // refrescar la lista
+      alert("🗑️ Servicio eliminado");
+    })
+    .catch((err) => {
+      console.error("❌ Error al eliminar servicio:", err);
+      alert("❌ Error al eliminar el servicio. Revisa la consola.");
+    });
   };
+
+
+  
 
   const columns = [
     { header: "ID", accessor: "servicio_id" }, // ✅ usar servicio_id
@@ -64,7 +77,8 @@ function Servicios() {
     acciones: (
       <>
         <button onClick={() => handleEdit(s)}>✏️</button>
-        <button onClick={() => handleDelete(s.servicio_id)}>🗑️</button>
+        <button onClick={() => handleDeleteServicio(s.servicio_id)}>🗑️</button>
+
       </>
     ),
   }));

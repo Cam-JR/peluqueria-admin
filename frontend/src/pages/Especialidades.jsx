@@ -61,9 +61,21 @@ function Especialidades() {
   
 
   // Eliminar especialidad
-  const handleDelete = (id) => {
-    axios.delete(`${API_URL}/${id}`).then(() => fetchEspecialidades());
+  // Eliminar especialidad (reemplaza tu handleDelete actual)
+const handleDelete = (id) => {
+  if (!window.confirm("¿Estás segura de eliminar esta especialidad?")) return;
+
+  axios.delete(`${API_URL}/${id}`)
+    .then(() => {
+      fetchEspecialidades();
+      alert("🗑️ Especialidad eliminada");
+    })
+    .catch((err) => {
+      console.error("❌ Error al eliminar especialidad:", err);
+      alert("❌ Error al eliminar la especialidad. Revisa la consola.");
+    });
   };
+
 
   // Columnas para la tabla genérica
   const columns = [
