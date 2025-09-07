@@ -1,13 +1,14 @@
 import { db } from "../config/db.js";
 
+// Obtener todas las citas 
 // Obtener todas las citas
 export const getCitas = async (req, res) => {
   try {
     const q = `
       SELECT 
         c.cita_id, 
-        c.fecha, 
-        c.hora, 
+        DATE_FORMAT(c.fecha, '%Y-%m-%d') AS fecha,
+        TIME_FORMAT(c.hora, '%H:%i') AS hora,
         c.observaciones,
         cl.cliente_id,
         CONCAT(cl.nombre, ' ', cl.apellido) AS cliente_nombre_completo,
@@ -35,6 +36,8 @@ export const getCitas = async (req, res) => {
   }
 };
 
+
+
 // Obtener cita por id
 export const getCitaById = async (req, res) => {
   try {
@@ -42,8 +45,8 @@ export const getCitaById = async (req, res) => {
     const q = `
       SELECT 
         c.cita_id, 
-        c.fecha, 
-        c.hora, 
+        DATE_FORMAT(c.fecha, '%Y-%m-%d') AS fecha,
+        TIME_FORMAT(c.hora, '%H:%i') AS hora,
         c.observaciones,
         cl.cliente_id,
         CONCAT(cl.nombre, ' ', cl.apellido) AS cliente_nombre_completo,
@@ -75,8 +78,9 @@ export const getCitaById = async (req, res) => {
   }
 };
 
-// Crear citas
 
+
+// Crear cita
 export const createCita = async (req, res) => {
   try {
     const {
@@ -93,32 +97,45 @@ export const createCita = async (req, res) => {
       observaciones
     } = req.body;
 
+    if (!fecha || !hora || !servicio_id || !peluquero_id || !metodo_pago_id || !estado_id) {
+      return res.status(400).json({ message: "Faltan campos obligatorios" });
+    }
+
     let idCliente = cliente_id;
 
-    // Si no existe cliente_id, creamos un cliente nuevo
-    if (!idCliente) {
+    // Crear cliente si no existe
+    if (!idCliente && cliente_nombre && cliente_apellido) {
       const [result] = await db.query(
         "INSERT INTO clientes (nombre, apellido, telefono) VALUES (?, ?, ?)",
-        [cliente_nombre, cliente_apellido, cliente_telefono]
+        [cliente_nombre, cliente_apellido, cliente_telefono || null]
       );
       idCliente = result.insertId;
     }
 
-    // Crear la cita con el cliente_id
     const q = `
       INSERT INTO citas (fecha, hora, servicio_id, peluquero_id, cliente_id, metodo_pago_id, estado_id, observaciones) 
       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `;
-    await db.query(q, [fecha, hora, servicio_id, peluquero_id, idCliente, metodo_pago_id, estado_id, observaciones]);
+    const [result] = await db.query(q, [
+      fecha,
+      hora,
+      servicio_id,
+      peluquero_id,
+      idCliente,
+      metodo_pago_id,
+      estado_id,
+      observaciones || null
+    ]);
 
-    res.json({ message: "Cita creada exitosamente" });
+    res.status(201).json({ message: "Cita creada exitosamente", cita_id: result.insertId });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
 
-export const updateCita = async (req, res) => {
+ // Actualizar cita
+  export const updateCita = async (req, res) => {
   try {
     const { id } = req.params;
     const {
@@ -135,44 +152,69 @@ export const updateCita = async (req, res) => {
       observaciones
     } = req.body;
 
+    if (!fecha || !hora || !servicio_id || !peluquero_id || !metodo_pago_id || !estado_id) {
+      return res.status(400).json({ message: "Faltan campos obligatorios" });
+    }
+
     let idCliente = cliente_id;
 
     // Crear cliente si no existe
-    if (!idCliente) {
+    if (!idCliente && cliente_nombre && cliente_apellido) {
       const [result] = await db.query(
         "INSERT INTO clientes (nombre, apellido, telefono) VALUES (?, ?, ?)",
-        [cliente_nombre, cliente_apellido, cliente_telefono]
+        [cliente_nombre, cliente_apellido, cliente_telefono || null]
       );
       idCliente = result.insertId;
+    } else if (idCliente && cliente_nombre && cliente_apellido) {
+      // 👇 Actualizar cliente existente
+      await db.query(
+        "UPDATE clientes SET nombre = ?, apellido = ?, telefono = ? WHERE cliente_id = ?",
+        [cliente_nombre, cliente_apellido, cliente_telefono || null, idCliente]
+      );
     }
 
+    // Actualizar cita
     const q = `
       UPDATE citas 
       SET fecha = ?, hora = ?, servicio_id = ?, peluquero_id = ?, cliente_id = ?, metodo_pago_id = ?, estado_id = ?, observaciones = ?
       WHERE cita_id = ?
     `;
-    const [result] = await db.query(q, [fecha, hora, servicio_id, peluquero_id, idCliente, metodo_pago_id, estado_id, observaciones, id]);
+    const [result] = await db.query(q, [
+      fecha,
+      hora,
+      servicio_id,
+      peluquero_id,
+      idCliente,
+      metodo_pago_id,
+      estado_id,
+      observaciones || null,
+      id
+    ]);
 
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: "Cita no encontrada" });
     }
 
-    res.json({ message: "Cita actualizada" });
+    res.json({ message: "Cita actualizada exitosamente" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-};
+  };
 
 
-// Eliminar una cita
+
+// Eliminar cita
 export const deleteCita = async (req, res) => {
   try {
     const { id } = req.params;
+
     const [result] = await db.query("DELETE FROM citas WHERE cita_id = ?", [id]);
+
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: "Cita no encontrada" });
     }
-    res.json({ message: "Cita eliminada" });
+
+    res.json({ message: "Cita eliminada exitosamente" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

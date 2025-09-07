@@ -5,6 +5,8 @@ import citasRoutes from "./routes/citasRoutes.js";
 import clientesRoutes from "./routes/clientesRoutes.js";
 import peluquerosRoutes from "./routes/peluquerosRoutes.js";
 import especialidadesRoutes from "./routes/especialidadesRoutes.js"; 
+import metodosPagoRoutes from "./routes/metodosPagoRoutes.js";
+import estadosRoutes from "./routes/estadosRoutes.js";
 
 
 const app = express();
@@ -20,7 +22,13 @@ app.use("/api/peluqueros", peluquerosRoutes);
 app.use("/api/clientes", clientesRoutes); // ✅
 app.use("/api/citas", citasRoutes);
 app.use("/api/especialidades", especialidadesRoutes);
+app.use("/api/metodos-pago", metodosPagoRoutes);
+app.use("/api/estados", estadosRoutes);
+
 
 app.listen(5000, () => {
   console.log("Servidor corriendo en http://localhost:5000");
 });
+
+ 
+ 
