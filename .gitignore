@@ -41,3 +41,8 @@ coverage/
 *.swp
 *.swo
 *.log
+
+
+# Estructura de codigo
+frontend-estructura
+backend-estructura
