@@ -44,5 +44,5 @@ coverage/
 
 
 # Estructura de codigo
-frontend-estructura.txt
-backend-estructura.txt
+frontend/frontend-estructura.txt
+backend/backend-estructura.txt
