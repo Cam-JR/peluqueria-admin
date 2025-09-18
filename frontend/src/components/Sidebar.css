@@ -1,18 +1,18 @@
 .sidebar {
-  width: 240px;                /* Ancho fijo */
-  height: 100vh;               /* Altura completa de la pantalla */
-  background: #4b3f8fee;       /* Morado con transparencia */
-  color: #fff;                 /* Texto blanco */
-  padding: 3rem 1rem;
+  width: 240px;
+  height: 100vh;
+  background: #4b3f8f;
+  color: #fff;
+  padding: 2rem 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
+
 
 .sidebar-header {
   font-size: 1.3rem;
   font-weight: bold;
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,7 +20,7 @@
 }
 
 .sidebar-logo {
-  width: 123rem;
+  width: 220px;        /* ✅ tamaño razonable */
   height: 120px;
   object-fit: contain;
   margin-bottom: 1rem;
@@ -29,7 +29,7 @@
 
 .sidebar ul {
   list-style: none;
-  padding: 10;
+  padding: 0;          /* ✅ corregido */
   margin: 0;
 }
 
@@ -46,14 +46,16 @@
   gap: 13px;
   transition: color 0.3s ease;
 }
-/* Efecto dorado al pasar el mouse */
-/* .sidebar a:hover {
-  color: #FFD700; 
-} */
 
+/* Hover dorado */
+.sidebar a:hover {
+  color: #FFD700;
+}
+
+/* Empuja hacia abajo el boton */
 .sidebar-footer {
   text-align: center;
-  margin-top: 10rem;
+  margin-top: 4rem;
 }
 
 .logout-btn {
@@ -76,3 +78,45 @@
 .logout-btn:hover {
   background-color: #e60000;
 }
+
+
+/* Botón hamburguesa */
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  color: white;
+  background: #4b3f8f;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+    position: fixed;
+    top: 15px;   /* ✅ espacio arriba */
+    left: 15px;  /* ✅ espacio a la izquierda */
+  }
+
+  .sidebar {
+    position: fixed;
+    left: -250px;
+    top: 0;
+    height: 100%;
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  /* ✅ agrega margen al contenido para que no tape */
+  .page-content {
+    margin-top: 60px;
+  }
+}
+ 
