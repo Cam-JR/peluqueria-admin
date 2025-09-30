@@ -15,7 +15,7 @@ function App() {
         <Sidebar />
         <div className="page-content">
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/servicios" element={<Servicios />} />
             <Route path="/peluqueros" element={<Peluqueros />} />
             <Route path="/citas" element={<Citas />} />
