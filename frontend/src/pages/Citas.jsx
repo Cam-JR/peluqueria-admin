@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Table from "../components/Table";
+import { FaEdit, FaTrashAlt } from 'react-icons/fa'; 
+import "../components/Citas.css";
+
 
 function Citas() {
   const [citas, setCitas] = useState([]);
@@ -266,16 +269,31 @@ function Citas() {
     { header: "Acciones", accessor: "acciones" },
   ];
 
-  const dataWithActions = citas.map((c) => ({
-    ...c,
-    fecha: c.fecha ? new Date(c.fecha).toLocaleDateString() : "",
-    acciones: (
-      <>
-        <button onClick={() => handleEdit(c)}>✏️</button>
-        <button onClick={() => handleDelete(c.cita_id)}>🗑️</button>
-      </>
-    ),
-  }));
+ const dataWithActions = citas.map((c) => ({
+  ...c,
+  fecha: c.fecha ? new Date(c.fecha).toLocaleDateString() : "",
+  acciones: (
+    <div className="action-buttons-container">
+      {/* Botón de Editar */}
+      <button 
+        className="btn-action btn-edit" 
+        onClick={() => handleEdit(c)} 
+        title="Editar Cita"
+      >
+        <FaEdit />
+      </button>
+      
+      {/* Botón de Eliminar */}
+      <button 
+        className="btn-action btn-delete" 
+        onClick={() => handleDelete(c.cita_id)} 
+        title="Eliminar Cita"
+      >
+        <FaTrashAlt />
+      </button>
+    </div>
+  ),
+}));
 
   return (
     <div>
@@ -403,14 +421,22 @@ function Citas() {
           required
         />
 
-        <button type="submit">
-          {editingId ? "Actualizar" : "Agregar"}
-        </button>
-        {editingId && (
-          <button type="button" onClick={resetForm}>
+        {/* 1. Botón Principal (Actualizar o Agregar) */}
+    <button type="submit" className="btn btn-primary">
+        {/* Aquí podemos añadir un icono para claridad visual */}
+        {editingId ? "Actualizar" : "Agregar"}
+    </button>
+    
+    {/* 2. Botón Secundario (Cancelar, solo visible en modo edición) */}
+    {editingId && (
+        <button 
+            type="button" 
+            onClick={resetForm} 
+            className="btn btn-secondary"
+        >
             Cancelar
-          </button>
-        )}
+        </button>
+    )}
       </form>
 
        

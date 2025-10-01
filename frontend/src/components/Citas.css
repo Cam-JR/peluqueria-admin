@@ -1,0 +1,57 @@
+/* --- CONTENEDOR DE BOTONES --- */
+.action-buttons-container {
+    display: flex;
+    gap: 8px; /* Espacio horizontal entre botones */
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- ESTILOS BASE PARA TODOS LOS BOTONES DE ACCIÓN --- */
+.btn-action {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px; /* Aumenta el área de clic */
+    border-radius: 4px;
+    font-size: 1.15rem; /* Tamaño del icono un poco más grande */
+    transition: background-color 0.2s, color 0.2s;
+    line-height: 1; /* Asegura que el icono no agregue espacio extra */
+    display: flex; /* Ayuda a centrar el icono */
+    align-items: center;
+}
+
+/* --- ESTILOS ESPECÍFICOS DE EDITAR --- */
+.btn-edit {
+    color: #4CAF50; /* Verde sugerente para editar/aceptar */
+}
+
+.btn-edit:hover {
+    background-color: #4CAF50;
+    color: #fff; /* Fondo verde, icono blanco */
+}
+
+/* --- ESTILOS ESPECÍFICOS DE ELIMINAR --- */
+.btn-delete {
+    /* Usamos el rojo de tu botón Cerrar Sesión para mantener la coherencia */
+    color: #e63946; 
+}
+
+.btn-delete:hover {
+    background-color: #e63946;
+    color: #fff; /* Fondo rojo, icono blanco */
+}
+
+/* Opcional: Asegúrate de que la celda de la tabla centre su contenido */
+.table-actions {
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+/* --- 1. CONTENEDOR DE ACCIONES --- */
+.form-actions {
+    display: flex;
+    gap: 15px; 
+    justify-content: flex-end; 
+    padding-top: 20px;
+}

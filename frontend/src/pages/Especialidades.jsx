@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Table from "../components/Table";
+import { FaEdit, FaTrashAlt } from 'react-icons/fa'; 
+import "../components/Especialidades.css";
+
+
 
 function Especialidades() {
   const [especialidades, setEspecialidades] = useState([]);
@@ -62,7 +66,7 @@ function Especialidades() {
 
   // Eliminar especialidad
   // Eliminar especialidad (reemplaza tu handleDelete actual)
-const handleDelete = (id) => {
+  const handleDelete = (id) => {
   if (!window.confirm("¿Estás segura de eliminar esta especialidad?")) return;
 
   axios.delete(`${API_URL}/${id}`)
@@ -84,16 +88,31 @@ const handleDelete = (id) => {
     { header: "Acciones", accessor: "acciones" },
   ];
 
-  // Preparar data incluyendo botones de acciones
-  const dataWithActions = especialidades.map((esp) => ({
-    ...esp,
-    acciones: (
-      <>
-        <button onClick={() => handleEdit(esp)}>✏️</button>
-        <button onClick={() => handleDelete(esp.especialidad_id)}>🗑️</button>
-      </>
-    ),
-  }));
+  /// Preparar data incluyendo botones de acciones
+const dataWithActions = especialidades.map((esp) => ({
+  ...esp,
+  acciones: (
+    <div className="action-buttons-container">
+      {/* Botón de Editar */}
+      <button 
+        className="btn-action btn-edit" 
+        onClick={() => handleEdit(esp)} 
+        title="Editar Especialidad"
+      >
+        <FaEdit />
+      </button>
+      
+      {/* Botón de Eliminar */}
+      <button 
+        className="btn-action btn-delete" 
+        onClick={() => handleDelete(esp.especialidad_id)} 
+        title="Eliminar Especialidad"
+      >
+        <FaTrashAlt />
+      </button>
+    </div>
+  ),
+}));
 
   return (
     <div>
