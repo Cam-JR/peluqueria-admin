@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // 👈 Importar useAuth
 import {
   FaBars,
   FaTimes,
@@ -10,24 +11,40 @@ import {
   FaStar,
   FaSignOutAlt,
 } from "react-icons/fa";
-import "./Sidebar.css"; // 👈 Asegúrate de importar el CSS aquí
+import "./Sidebar.css"; // Asegúrate de importar el CSS aquí
+
+// export default function Sidebar() {
+//   const [isOpen, setIsOpen] = useState(false);
+
+//   const toggleSidebar = () => setIsOpen(!isOpen);
+
+
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { logout } = useAuth(); // 👈 Usar el contexto
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
-  const menuItems = [ 
-    { to: "/dashboard", icon: FaTachometerAlt, label: "Dashboard" },
-    { to: "/peluqueros", icon: FaUserTie, label: "Peluqueros" }, 
-    { to: "/servicios", icon: FaCut, label: "Servicios" }, 
-    { to: "/citas", icon: FaCalendarAlt, label: "Citas" },
-    { to: "/especialidades", icon: FaStar, label: "Especialidades" },
-  ];
+  const handleLogout = () => {
+    logout(); // 👈 Usar logout del contexto
+    navigate('/login', { replace: true }); // 👈 replace: true es importante
+    
+    if (isOpen) {
+      setIsOpen(false);
+    }
+  };
+
+    const menuItems = [ 
+      { to: "/dashboard", icon: FaTachometerAlt, label: "Dashboard" },
+      { to: "/peluqueros", icon: FaUserTie, label: "Peluqueros" }, 
+      { to: "/servicios", icon: FaCut, label: "Servicios" }, 
+      { to: "/citas", icon: FaCalendarAlt, label: "Citas" },
+      { to: "/especialidades", icon: FaStar, label: "Especialidades" },
+    ];
 
   return (
     <>
-      {/* Botón de toggle ARRIBA del todo */}
       <button className="sidebar-toggle" onClick={toggleSidebar}>
         {isOpen ? <FaTimes /> : <FaBars />}
       </button>
@@ -52,7 +69,8 @@ export default function Sidebar() {
         </nav>
 
         <div className="sidebar-footer">
-          <button className="logout-btn">
+          {/* 👇 Conectar el onClick a handleLogout */}
+          <button className="logout-btn" onClick={handleLogout}>
             <FaSignOutAlt /> 
             Cerrar sesión
           </button>
