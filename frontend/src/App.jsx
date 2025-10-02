@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider, useAuth } from "./context/AuthContext"; // 👈 Importar el provider
+import { AuthProvider, useAuth } from "./context/AuthContext"; // Provider
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Servicios from "./pages/Servicios";
@@ -8,7 +8,7 @@ import Peluqueros from "./pages/Peluqueros";
 import Citas from "./pages/Citas";
 import Especialidades from "./pages/Especialidades";
 import Login from "./pages/Login";
-import ProtectedRoute from "./components/ProtectedRoute"; // 👈 Importar la ruta protegida
+import ProtectedRoute from "./components/ProtectedRoute"; // Ruta protegida
 import "./styles/App.css";
 
 // Componente Wrapper para las rutas del panel con Sidebar (Layout Privado)
@@ -31,7 +31,7 @@ const PrivateLayout = () => (
 
 function App() {
   return (
-    <AuthProvider> {/* 👈 Envolver toda la app con el AuthProvider */}
+    <AuthProvider> {/*AuthProvider */}
       <Routes>
         {/* RUTA PÚBLICA: Login */}
         <Route path="/login" element={<Login />} />
@@ -40,7 +40,7 @@ function App() {
         <Route 
           path="/*" 
           element={
-            <ProtectedRoute> {/* 👈 Proteger todas las rutas */}
+            <ProtectedRoute> {/* Proteger todas las rutas */}
               <div className="app-container">
                 <PrivateLayout />
               </div>
