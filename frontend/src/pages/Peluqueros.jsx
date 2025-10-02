@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { FaEdit, FaTrashAlt } from 'react-icons/fa'; 
+import "../components/Peluqueros.css";
+
 import Table from "../components/Table";
 
 function Peluqueros() {
@@ -111,14 +114,30 @@ function Peluqueros() {
   ];
 
   const dataWithActions = peluqueros.map((p) => ({
-    ...p,
-    acciones: (
-      <>
-        <button onClick={() => handleEdit(p)}>✏️</button>
-        <button onClick={() => handleDelete(p.peluquero_id)}>🗑️</button>
-      </>
-    ),
-  }));
+  ...p,
+  acciones: (
+    // Reutilizamos el contenedor que ya tiene la alineación y espaciado definidos
+    <div className="action-buttons-container">
+      {/* Botón de Editar */}
+      <button 
+        className="btn-action btn-edit" 
+        onClick={() => handleEdit(p)} 
+        title="Editar Peluquero"
+      >
+        <FaEdit />
+      </button>
+      
+      {/* Botón de Eliminar */}
+      <button 
+        className="btn-action btn-delete" 
+        onClick={() => handleDelete(p.peluquero_id)} 
+        title="Eliminar Peluquero"
+      >
+        <FaTrashAlt />
+      </button>
+    </div>
+  ),
+}));
 
   // ==============================
   // Render

@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { FaEdit, FaTrashAlt } from 'react-icons/fa'; 
+import "../components/Servicios.css";
+
 import Table from "../components/Table";
 
 function Servicios() {
@@ -74,14 +77,28 @@ const handleDeleteServicio = (id) => {
 
   const dataWithActions = servicios.map((s) => ({
     ...s,
-    acciones: (
-      <>
-        <button onClick={() => handleEdit(s)}>✏️</button>
-        <button onClick={() => handleDeleteServicio(s.servicio_id)}>🗑️</button>
-
-      </>
-    ),
-  }));
+      acciones: (
+        <div className="action-buttons-container">
+          {/* Botón de Editar */}
+          <button 
+            className="btn-action btn-edit" 
+            onClick={() => handleEdit(esp)} 
+            title="Editar Especialidad"
+          >
+            <FaEdit />
+          </button>
+          
+          {/* Botón de Eliminar */}
+          <button 
+            className="btn-action btn-delete" 
+            onClick={() => handleDelete(esp.especialidad_id)} 
+            title="Eliminar Especialidad"
+          >
+            <FaTrashAlt />
+          </button>
+        </div>
+      ),
+    }));
 
   return (
     <div>
