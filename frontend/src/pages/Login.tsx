@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import { FaUser, FaLock, FaSignInAlt, FaCut } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import axios from "axios"; 
-
-// Importa la imagen de fondo (IMPORTANTE: asegúrate de que la ruta es correcta)
+import { useAuth } from '../context/AuthContext'; // 👈 Importar useAuth
 import fondoSVG from "../assets/fondo.svg";
+import "../styles/login.css"; 
 
-// Asegúrate de que la ruta de importación de CSS es correcta
-import "../components/login.css"; 
    
 
 // --- INTERFACES DE TIPADO ---
@@ -22,6 +19,7 @@ interface HandleSubmitEvent extends React.FormEvent<HTMLFormElement> {}
 
 export default function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth(); // 👈 Usar el contexto
   
   const [formData, setFormData] = useState<LoginFormData>({ user: '', password: '' });
   const [error, setError] = useState<string>('');
@@ -36,23 +34,12 @@ export default function Login() {
 
       // Lógica de autenticación (Hardcodeado para la demostración)
       if (formData.user === 'admin' && formData.password === '123') {
-          // Redirecciona al usuario al dashboard después del éxito
-          navigate('/dashboard'); 
-      } else {
-          setError('Credenciales inválidas. Inténtalo de nuevo.');
-      }
-      
-      // NOTA: Para llamadas reales a la API, usarías axios aquí
-      /*
-      axios.post('/api/login', formData)
-        .then(response => {
-           // manejar token y navegar
-           navigate('/dashboard');
-        })
-        .catch(err => {
-           setError('Error en el servidor o credenciales incorrectas.');
-        });
-      */
+           //  Usar el login del contexto en lugar de navegar directamente
+          login('token-simulado'); // Puedes pasar un token real aquí
+      navigate('/dashboard', { replace: true }); // 👈 replace: true evita que pueda retroceder
+    } else {
+      setError('Credenciales inválidas. Inténtalo de nuevo.');
+    }
   };
 
   return (

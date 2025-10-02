@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Table from "../components/Table";
 import { FaEdit, FaTrashAlt } from 'react-icons/fa'; 
-import "../components/Citas.css";
+import "../styles/App.css";
 
 
 function Citas() {

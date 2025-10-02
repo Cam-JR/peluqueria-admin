@@ -1,5 +1,6 @@
-import "../components/Dashboard.css";
 import { FaUserTie, FaCalendarAlt, FaStar, FaCut } from "react-icons/fa";
+import "../styles/Dashboard.css";
+
 
 export default function Dashboard() {
   const stats = [

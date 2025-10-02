@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaEdit, FaTrashAlt } from 'react-icons/fa'; 
-import "../components/Servicios.css";
+import "../styles/App.css";
 
 import Table from "../components/Table";
 
