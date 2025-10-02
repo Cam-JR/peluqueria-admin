@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext"; // Provider
+import { DataProvider } from "./context/DataContext"; // DataProvider
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Servicios from "./pages/Servicios";
@@ -32,25 +33,27 @@ const PrivateLayout = () => (
 function App() {
   return (
     <AuthProvider> {/*AuthProvider */}
-      <Routes>
-        {/* RUTA PÚBLICA: Login */}
-        <Route path="/login" element={<Login />} />
-        
-        {/* RUTAS PROTEGIDAS: Envolver con ProtectedRoute */}
-        <Route 
-          path="/*" 
-          element={
-            <ProtectedRoute> {/* Proteger todas las rutas */}
-              <div className="app-container">
-                <PrivateLayout />
-              </div>
-            </ProtectedRoute>
-          } 
-        />
+      <DataProvider> 
+        <Routes>
+          {/* RUTA PÚBLICA: Login */}
+          <Route path="/login" element={<Login />} />
+          
+          {/* RUTAS PROTEGIDAS: Envolver con ProtectedRoute */}
+          <Route 
+            path="/*" 
+            element={
+              <ProtectedRoute> {/* Proteger todas las rutas */}
+                <div className="app-container">
+                  <PrivateLayout />
+                </div>
+              </ProtectedRoute>
+            } 
+          />
 
-        {/* Redirigir la ruta raíz a login o dashboard según autenticación */}
-        <Route path="/" element={<Navigate to="/login" replace />} />
-      </Routes>
+          {/* Redirigir la ruta raíz a login o dashboard según autenticación */}
+          <Route path="/" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </DataProvider>
     </AuthProvider>
   );
 }
