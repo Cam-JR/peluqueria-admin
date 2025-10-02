@@ -1,0 +1,150 @@
+/* --- VARIABLES --- */
+:root {
+    --primary-color: #2d0a4e; 
+    --accent-color: #e63946; 
+    --light-bg: #1a082e; /* Color oscuro para el caso de que la imagen no cargue */
+    --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); 
+}
+
+/* --- CONTENEDOR PRINCIPAL (Fondo Estático y Fijo) --- */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+
+    /* ESTILOS CLAVE: El fondo pasado por React se ajustará aquí */
+    background-color: var(--light-bg); 
+    background-position: center center;
+    background-repeat: no-repeat;
+    
+    background-size: cover; 
+    background-attachment: fixed; /* Esto asegura que el fondo NO se mueva */
+}
+
+
+
+/* --- CAJA DE LOGIN (Transparente) --- */
+.login-box {
+    /* Fondo semi-transparente (85% de opacidad) */
+    background-color: rgba(255, 255, 255, 0.85); 
+    
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: var(--box-shadow);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    
+    /* Agrega un leve desenfoque al fondo detrás de la caja */
+    backdrop-filter: blur(5px); 
+    -webkit-backdrop-filter: blur(5px); 
+}
+
+/* --- ESTILOS DE COMPONENTES INTERNOS (Para claridad) --- */
+.login-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.login-header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0 0 0 10px;
+}
+
+.login-header .header-icon {
+    font-size: 2rem;
+}
+
+.login-subtitle {
+    color: #777;
+    margin-top: -10px;
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+}
+
+.error-message {
+    background-color: #ffe0e0;
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0 10px;
+    transition: border-color 0.2s;
+}
+
+.input-group:focus-within {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 1px var(--primary-color);
+}
+
+.input-icon {
+    color: #aaa;
+    margin-right: 10px;
+    font-size: 1rem;
+}
+
+.input-group input {
+    flex-grow: 1;
+    padding: 12px 0;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+}
+
+.login-btn {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.login-btn:hover {
+    background-color: #3e1b64;
+    box-shadow: 0 6px 15px rgba(45, 10, 78, 0.3);
+}
+
+.login-btn .btn-icon {
+    font-size: 1.2rem;
+}
+
+.forgot-password {
+    display: block;
+    margin-top: 20px;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+.forgot-password:hover {
+    color: var(--accent-color);
+}
+  
